@@ -34,3 +34,16 @@ class UploadDocSUcessState extends UploadfileState {
 }
 
 class UploadDocErrorState extends UploadfileState {}
+
+/// post data
+class PostDataLodingState extends UploadfileState {}
+
+class PostDataErrorState extends UploadfileState {
+  final String error;
+  PostDataErrorState(this.error);
+}
+
+class PostDataSuccessState extends UploadfileState {
+  final PostModel postModel;
+  PostDataSuccessState(this.postModel);
+}

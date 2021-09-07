@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_onaisa/bloc/app_bloc.dart';
+
 import 'package:task_onaisa/bloc/uploadfile_bloc.dart';
 import 'package:task_onaisa/ui/pages/seconde_screen.dart';
 import 'package:task_onaisa/ui/widgets/components.dart';
@@ -35,9 +35,14 @@ class FirstScreen extends StatelessWidget {
             if (state is UploadDocSUcessState) {
               Doccontroller.text = state.Doc.path;
             }
+            if (state is PostDataSuccessState) {
+              showToast(text: "post successful", state: ToastStates.SUCCESS);
+            }
+            if (state is PostDataErrorState) {
+              showToast(text: "post unsccessful", state: ToastStates.ERROR);
+            }
           },
           builder: (context, state) {
-            AppBloc appbloc = AppBloc();
             return Scaffold(
               appBar: defoaltAppbar(title: "The First Page"),
               body: Container(
@@ -120,24 +125,24 @@ class FirstScreen extends StatelessWidget {
                           const SizedBox(
                             height: 15.0,
                           ),
-                          BlocBuilder<AppBloc, AppState>(
+                          BlocBuilder<UploadfileBloc, UploadfileState>(
                             builder: (context, state) {
                               return defoalButton(
                                   text: "upload",
                                   onpressed: () {
-                                    // if (formKey.currentState.validate()) {
-                                    appbloc.add(PostDataEvent(
-                                        titlecontroller.text,
-                                        subjectcontroller.text,
-                                        Imagecontroller.text,
-                                        Videocontroller.text,
-                                        Doccontroller.text));
-                                    print(titlecontroller.text);
-                                    print(subjectcontroller.text);
-                                    print(Imagecontroller.text);
-                                    print(Videocontroller.text);
-                                    print(Doccontroller.text);
-                                    // }
+                                    if (formKey.currentState.validate()) {
+                                      filebloc.add(PostDataEvent(
+                                          titlecontroller.text,
+                                          subjectcontroller.text,
+                                          Imagecontroller.text,
+                                          Videocontroller.text,
+                                          Doccontroller.text));
+                                      print(titlecontroller.text);
+                                      print(subjectcontroller.text);
+                                      print(Imagecontroller.text);
+                                      print(Videocontroller.text);
+                                      print(Doccontroller.text);
+                                    }
                                   });
                             },
                           ),
@@ -150,7 +155,10 @@ class FirstScreen extends StatelessWidget {
                                 navigateTo(context, SecondScreen());
                                 print("go");
                               }),
-                          BlocBuilder<AppBloc, AppState>(
+                          const SizedBox(
+                            height: 15.0,
+                          ),
+                          BlocBuilder<UploadfileBloc, UploadfileState>(
                             builder: (context, state) {
                               if (state is PostDataLodingState)
                                 return Center(

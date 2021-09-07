@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:task_onaisa/models/getmodel.dart';
+import 'package:task_onaisa/models/itemmodel.dart';
 import 'package:task_onaisa/models/postmodel.dart';
 import 'package:task_onaisa/ui/widgets/constance.dart';
 import 'package:http_parser/http_parser.dart';
@@ -62,21 +64,21 @@ class DioService {
       'photo': await MultipartFile.fromFile(
         imagepath,
         filename: imagepath.split("/").last,
-        contentType: MediaType('photo', ''),
+        // contentType: MediaType('photo', ''),
       ),
       'video': await MultipartFile.fromFile(
         videopath,
         filename: videopath.split("/").last,
-        contentType: MediaType('video', ''),
+        // contentType: MediaType('video', ''),
       ),
       'doc': await MultipartFile.fromFile(
         docpath,
-        filename: docpath.split("/").first,
-        contentType: MediaType('file', ''),
+        filename: docpath.split("/").last,
+        // contentType: MediaType('file', ''),
       ),
     });
     dio.options.headers = {
-      // "Accept": "*/*",
+      "Accept": "*/*",
       "Content-Type": "multipart/form-data"
     };
     Response response = await dio.post<dynamic>(
@@ -90,11 +92,19 @@ class DioService {
     return response;
   }
 
-  static Future<Response> getData() async {
+  static Future<Response<String>> getData() async {
     dio.options.headers = {
       'Content-Type': 'application/json',
     };
 
-    return await dio.get(GetEndPoint);
+    return await dio.get("/blogs-flutter-task");
+  }
+
+  static Future<Response<Map>> getDataItem({int id}) async {
+    dio.options.headers = {
+      'Content-Type': 'application/json;charset=utf-8',
+    };
+
+    return await dio.get("/blogs-flutter-task?id=$id");
   }
 }
