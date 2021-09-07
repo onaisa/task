@@ -49,34 +49,45 @@ class DioService {
     );
   }
 
-  static Future<PostModel> postData({
+  static Future<dynamic> postData({
     @required String title,
     @required String subject,
     @required String imagepath,
     @required String videopath,
     @required String docpath,
   }) async {
-    var formData = FormData.fromMap({
+    FormData formData = new FormData.fromMap({
       'tilte': title,
       'subject': subject,
-      'photo': await MultipartFile.fromFile(imagepath,
-          filename: imagepath.split("/").last,
-          contentType: MediaType('photo', imagepath.split("/").last)),
+      'photo': await MultipartFile.fromFile(
+        imagepath,
+        filename: imagepath.split("/").last,
+        contentType: MediaType('photo', ''),
+      ),
       'video': await MultipartFile.fromFile(
         videopath,
         filename: videopath.split("/").last,
-        contentType: MediaType('video', videopath.split("/").last),
+        contentType: MediaType('video', ''),
       ),
       'doc': await MultipartFile.fromFile(
         docpath,
-        filename: docpath.split("/").last,
-        contentType: MediaType('file', docpath.split("/").last),
+        filename: docpath.split("/").first,
+        contentType: MediaType('file', ''),
       ),
     });
-    var response = await dio.post<dynamic>("/store-blog-flutter-task",
-        data: formData,
-        options: Options(
-            headers: {"Accept": "*/*", "Content-Type": "multipart/form-data"}));
+    dio.options.headers = {
+      // "Accept": "*/*",
+      "Content-Type": "multipart/form-data"
+    };
+    Response response = await dio.post<dynamic>(
+      "/store-blog-flutter-task",
+      data: formData,
+      // options: Options(headers: <String, String>{
+      //   "Accept": "*/*",
+      //   "Content-Type": "multipart/form-data"
+      // }),
+    );
+    return response;
   }
 
   static Future<Response> getData() async {

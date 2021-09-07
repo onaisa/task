@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -28,14 +29,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         // var result = await DioService.getData();
         // GetModel getModel = GetModel.fromJson(result.data);
         // print(result.toString());
-        var result = await DioService.postData(
+
+        Response result = await DioService.postData(
             title: event.title,
             subject: event.subject,
             docpath: event.docpath,
             imagepath: event.imagepath,
             videopath: event.videopath);
+        // if()
         // postModel = PostModel.fromJson(result.data);
-        print(result.errors);
+        print(result.statusMessage.toString());
+
         yield (PostDataSuccessState(postModel));
       } catch (e) {
         print(e.toString());

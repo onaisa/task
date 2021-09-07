@@ -37,6 +37,7 @@ class FirstScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            AppBloc appbloc = AppBloc();
             return Scaffold(
               appBar: defoaltAppbar(title: "The First Page"),
               body: Container(
@@ -121,19 +122,22 @@ class FirstScreen extends StatelessWidget {
                           ),
                           BlocBuilder<AppBloc, AppState>(
                             builder: (context, state) {
-                              AppBloc appbloc = AppBloc();
                               return defoalButton(
                                   text: "upload",
                                   onpressed: () {
-                                    if (formKey.currentState.validate()) {
-                                      appbloc.add(PostDataEvent(
-                                          titlecontroller.text,
-                                          subjectcontroller.text,
-                                          Imagecontroller.text,
-                                          Videocontroller.text,
-                                          Doccontroller.text));
-                                      print("ok");
-                                    }
+                                    // if (formKey.currentState.validate()) {
+                                    appbloc.add(PostDataEvent(
+                                        titlecontroller.text,
+                                        subjectcontroller.text,
+                                        Imagecontroller.text,
+                                        Videocontroller.text,
+                                        Doccontroller.text));
+                                    print(titlecontroller.text);
+                                    print(subjectcontroller.text);
+                                    print(Imagecontroller.text);
+                                    print(Videocontroller.text);
+                                    print(Doccontroller.text);
+                                    // }
                                   });
                             },
                           ),
