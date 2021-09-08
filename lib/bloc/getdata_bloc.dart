@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:task_onaisa/models/getmodel.dart';
-import 'package:task_onaisa/models/itemmodel.dart';
 import 'package:task_onaisa/service/services.dart';
 
 part 'getdata_event.dart';
@@ -34,7 +33,7 @@ class GetdataBloc extends Bloc<GetdataEvent, GetdataState> {
         yield (GetAllDataSuccessState(getModel));
       } catch (e) {
         print(e.toString());
-        yield (GetAllDataErrorState(e.toString()));
+        yield (GetAllDataErrorState("no connect"));
       }
     }
   }

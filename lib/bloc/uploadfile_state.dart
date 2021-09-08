@@ -9,7 +9,7 @@ class UploadfileInitial extends UploadfileState {}
 class UploadImageLodingState extends UploadfileState {}
 
 class UploadImageSUcessState extends UploadfileState {
-  String imagepath;
+  final String imagepath;
   UploadImageSUcessState(this.imagepath);
 }
 
@@ -19,8 +19,8 @@ class UploadImageErrorState extends UploadfileState {}
 class UploadVideoLodingState extends UploadfileState {}
 
 class UploadVideoSUcessState extends UploadfileState {
-  String Videopath;
-  UploadVideoSUcessState(this.Videopath);
+  final String videopath;
+  UploadVideoSUcessState(this.videopath);
 }
 
 class UploadVideoErrorState extends UploadfileState {}
@@ -29,8 +29,8 @@ class UploadVideoErrorState extends UploadfileState {}
 class UploadDocLodingState extends UploadfileState {}
 
 class UploadDocSUcessState extends UploadfileState {
-  String Docpath;
-  UploadDocSUcessState(this.Docpath);
+  final String docpath;
+  UploadDocSUcessState(this.docpath);
 }
 
 class UploadDocErrorState extends UploadfileState {}

@@ -12,12 +12,10 @@ Widget defaoltTextFormFiled({
         controller: textController,
         keyboardType: TextInputType.text,
         validator: (text) {
-          if (text != null) {
-            if (text.isEmpty) {
-              return "$textValidator is requierd";
-            } else
-              return null;
-          }
+          if (text.isEmpty) {
+            return "$textValidator is requierd";
+          } else
+            return null;
         },
         decoration: InputDecoration(
           counterText: conterText,

@@ -4,11 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:task_onaisa/models/getmodel.dart';
-import 'package:task_onaisa/models/itemmodel.dart';
-import 'package:task_onaisa/models/postmodel.dart';
-import 'package:task_onaisa/ui/widgets/constance.dart';
+
 import 'package:http_parser/http_parser.dart';
+import 'package:task_onaisa/ui/widgets/constance.dart';
 
 class FileService {
   Future<File> pickImage() async {
@@ -46,11 +44,13 @@ class DioService {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "http://58one54zero.joybox-me.com/api",
+        baseUrl: baseUrl,
         receiveDataWhenStatusError: true,
       ),
     );
   }
+
+  /// post data
 
   static Future<dynamic> postData({
     @required String title,
@@ -62,20 +62,6 @@ class DioService {
     FormData formData = new FormData.fromMap({
       'tilte': title,
       'subject': subject,
-      // 'files': [
-      //   await MultipartFile.fromFile(
-      //     imagepath,
-      //     filename: basename(imagepath),
-      //   ),
-      //   MultipartFile.fromFileSync(
-      //     videopath,
-      //     filename: basename(videopath),
-      //   ),
-      //   MultipartFile.fromFileSync(
-      //     docpath,
-      //     filename: basename(docpath),
-      //   ),
-      // ],
       'photo': await MultipartFile.fromFile(
         imagepath,
         filename: basename(imagepath),
@@ -92,10 +78,9 @@ class DioService {
         contentType: MediaType('file', basename(docpath)),
       ),
     });
-    // dio.options.contentType = Headers.formUrlEncodedContentType;
 
     Response response = await dio.post<dynamic>(
-      "/store-blog-flutter-task",
+      postEndPoint,
       data: formData,
       options: Options(headers: <String, String>{
         "Accept": "application/json",
@@ -105,14 +90,17 @@ class DioService {
     return response;
   }
 
+  ///get all data
+
   static Future<Response<String>> getData() async {
     dio.options.headers = {
       'Content-Type': 'application/json',
     };
 
-    return await dio.get("/blogs-flutter-task");
+    return await dio.get(GetEndPoint);
   }
 
+  ///get data item
   static Future<Response<Map>> getDataItem({int id}) async {
     dio.options.headers = {
       'Content-Type': 'application/json;charset=utf-8',

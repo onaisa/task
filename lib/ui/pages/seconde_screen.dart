@@ -11,46 +11,46 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => GetdataBloc()..add(GetAllDataEvent()),
-        child:
-            BlocConsumer<GetdataBloc, GetdataState>(listener: (context, state) {
-          if (state is GetAllDataSuccessState) {
-            getModel = state.getModel;
-          }
-        }, builder: (context, state) {
-          return Scaffold(
-            appBar: defoaltAppbar(title: "The Second Page"),
-            body: BlocBuilder<GetdataBloc, GetdataState>(
-                builder: (context, state) {
-              if (state is GetAllDataSuccessState) {
-                return ListView.separated(
-                    itemBuilder: (context, index) =>
-                        ListItem(cont: context, datum: getModel.data[index]),
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 10.0,
-                        ),
-                    itemCount: getModel.data.length);
-              } else if (state is GetAllDataLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is GetAllDataErrorState) {
-                return Center(
-                  child: Text(state.error.toString()),
-                );
-              } else {
-                return Center(
-                  child: Text("no data"),
-                );
-              }
-            }),
-          );
-        }));
+    return BlocConsumer<GetdataBloc, GetdataState>(
+      listener: (context, state) {
+        if (state is GetAllDataSuccessState) {
+          getModel = state.getModel;
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: defoaltAppbar(title: "The Second Page"),
+          body:
+              BlocBuilder<GetdataBloc, GetdataState>(builder: (context, state) {
+            if (state is GetAllDataSuccessState) {
+              return ListView.separated(
+                  itemBuilder: (context, index) =>
+                      listItem(cont: context, datum: getModel.data[index]),
+                  separatorBuilder: (context, index) => SizedBox(
+                        height: 10.0,
+                      ),
+                  itemCount: getModel.data.length);
+            } else if (state is GetAllDataLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is GetAllDataErrorState) {
+              return Center(
+                child: Text(state.error.toString()),
+              );
+            } else {
+              return Center(
+                child: Text("no data"),
+              );
+            }
+          }),
+        );
+      },
+    );
   }
 }
 
-Widget ListItem({BuildContext cont, Datum datum}) => InkWell(
+Widget listItem({BuildContext cont, Datum datum}) => InkWell(
       onTap: () {
         navigateTo(cont, ThirdScreen(datum));
       },

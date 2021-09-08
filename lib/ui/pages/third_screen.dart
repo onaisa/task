@@ -1,17 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_onaisa/bloc/getdata_bloc.dart';
-import 'package:task_onaisa/bloc/getmedia_bloc.dart';
+
 import 'package:task_onaisa/models/getmodel.dart';
-import 'package:task_onaisa/models/itemmodel.dart';
-import 'package:task_onaisa/models/postmodel.dart';
+
 import 'package:task_onaisa/ui/widgets/components.dart';
 
 class ThirdScreen extends StatefulWidget {
-  // int id;
-  // ThirdScreen(this.id);
   Datum datum;
   ThirdScreen(this.datum);
 
@@ -22,36 +17,17 @@ class ThirdScreen extends StatefulWidget {
 class _ThirdScreenState extends State<ThirdScreen> {
   var boardconroller = PageController();
 
-  GetdataBloc getdataBloc;
+  String url;
 
   double currentindex = 0.0;
-  String url;
 
   @override
   Widget build(BuildContext context) {
-    // return
-    //  BlocProvider(
-    //     create: (context) => GetmediaBloc(),
-    //     child: BlocConsumer<GetmediaBloc, GetmediaState>(
-    //       listener: (context, state) {
-    //         // if (state is GetDataItemSuccessState) {
-    //         //   mydata = state.mydata;
-    //         // }
-    //       },
-    //       builder: (context, state) {
     return Scaffold(
       appBar: defoaltAppbar(title: "The Third Page"),
       body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child:
-              // BlocBuilder<GetmediaBloc, GetmediaState>(builder: (context, state) {
-              // if (state is GetDataItemLoadingState) {
-              //   return Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // } else if (state is GetDataItemSuccessState) {
-              // return
-              Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -100,9 +76,9 @@ class _ThirdScreenState extends State<ThirdScreen> {
                       });
                     },
                     physics: BouncingScrollPhysics(),
-                    itemCount: widget.datum.medias.length,
+                    itemCount: widget.datum.medias.length ?? 1,
                     itemBuilder: (context, index) {
-                      return boardingItem(widget.datum.medias[index], context);
+                      return pageViewItem(widget.datum.medias[index], context);
                     }),
               ),
               SizedBox(
@@ -122,56 +98,35 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 ),
               ),
             ],
-          )
-          // } else {
-          //   return Center(
-          //     child: Text('no data'),
-          //   );
-          // }
-          // },
-          ),
+          )),
     );
-    // );
-    //         },
-    //       ));
-    // }
   }
+}
 
-  Widget boardingItem(Media media, context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-            flex: 2,
-            child: CachedNetworkImage(
-              imageUrl: '${media.media}',
-              placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => Image.network(
-                  "http://58one54zero.joybox-me.com/ArabTeco/storage/app/photos/1626166613512.png"),
-              fit: BoxFit.fill,
-            )
-            //  Image(
-            //   image:
-            //   NetworkImage('${media.media}'),
-            //   fit: BoxFit.contain,
-            // ),
-            ),
-        SizedBox(
-          height: 20.0,
-        ),
-        Text(
-          '${media.type}',
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        // SizedBox(
-        //   height: 10.0,
-        // ),
-        // Expanded(flex: 1, child: Text('${media.updatedAt}')),
-        SizedBox(
-          height: 30.0,
-        ),
-      ],
-    );
-  }
+Widget pageViewItem(Media media, context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Expanded(
+          flex: 2,
+          child: CachedNetworkImage(
+            imageUrl: '${media.media}',
+            placeholder: (context, url) =>
+                Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => Image.network(
+                "http://58one54zero.joybox-me.com/ArabTeco/storage/app/photos/1626166613512.png"),
+            fit: BoxFit.fill,
+          )),
+      SizedBox(
+        height: 20.0,
+      ),
+      Text(
+        '${media.type}',
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
+      SizedBox(
+        height: 30.0,
+      ),
+    ],
+  );
 }

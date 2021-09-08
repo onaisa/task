@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,9 +9,9 @@ class FirstScreen extends StatelessWidget {
   FirstScreen({Key key}) : super(key: key);
   TextEditingController titlecontroller = TextEditingController();
   TextEditingController subjectcontroller = TextEditingController();
-  TextEditingController Imagecontroller = TextEditingController();
-  TextEditingController Videocontroller = TextEditingController();
-  TextEditingController Doccontroller = TextEditingController();
+  TextEditingController imagecontroller = TextEditingController();
+  TextEditingController videocontroller = TextEditingController();
+  TextEditingController doccontroller = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   UploadfileBloc filebloc;
@@ -26,14 +23,14 @@ class FirstScreen extends StatelessWidget {
         child: BlocConsumer<UploadfileBloc, UploadfileState>(
           listener: (context, state) {
             if (state is UploadImageSUcessState) {
-              Imagecontroller.text = state.imagepath;
-              print(Imagecontroller.text);
+              imagecontroller.text = state.imagepath;
+              print(imagecontroller.text);
             }
             if (state is UploadVideoSUcessState) {
-              Videocontroller.text = state.Videopath;
+              videocontroller.text = state.videopath;
             }
             if (state is UploadDocSUcessState) {
-              Doccontroller.text = state.Docpath;
+              doccontroller.text = state.docpath;
             }
             if (state is PostDataSuccessState) {
               showToast(text: "post successful", state: ToastStates.SUCCESS);
@@ -82,7 +79,7 @@ class FirstScreen extends StatelessWidget {
                             height: 15.0,
                           ),
                           defaoltFileFormFiled(
-                            textController: Imagecontroller,
+                            textController: imagecontroller,
                             onTap: () {
                               filebloc.add(UploadImageEvent());
                             },
@@ -96,7 +93,7 @@ class FirstScreen extends StatelessWidget {
                           BlocBuilder<UploadfileBloc, UploadfileState>(
                             builder: (context, state) {
                               return defaoltFileFormFiled(
-                                textController: Doccontroller,
+                                textController: doccontroller,
                                 onTap: () {
                                   filebloc.add(UploadDocEvent());
                                 },
@@ -112,7 +109,7 @@ class FirstScreen extends StatelessWidget {
                           BlocBuilder<UploadfileBloc, UploadfileState>(
                             builder: (context, state) {
                               return defaoltFileFormFiled(
-                                textController: Videocontroller,
+                                textController: videocontroller,
                                 onTap: () {
                                   filebloc.add(UploadVideoEvent());
                                 },
@@ -134,14 +131,14 @@ class FirstScreen extends StatelessWidget {
                                       filebloc.add(PostDataEvent(
                                           titlecontroller.text,
                                           subjectcontroller.text,
-                                          Imagecontroller.text,
-                                          Videocontroller.text,
-                                          Doccontroller.text));
+                                          imagecontroller.text,
+                                          videocontroller.text,
+                                          doccontroller.text));
                                       print(titlecontroller.text);
                                       print(subjectcontroller.text);
-                                      print(Imagecontroller.text);
-                                      print(Videocontroller.text);
-                                      print(Doccontroller.text);
+                                      print(imagecontroller.text);
+                                      print(videocontroller.text);
+                                      print(doccontroller.text);
                                     }
                                   });
                             },

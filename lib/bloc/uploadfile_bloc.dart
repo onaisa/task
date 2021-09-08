@@ -69,7 +69,6 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
             imagepath: event.imagepath,
             videopath: event.videopath);
         // final result = json.decode(response.toString())['result'];
-        // if()
         // postModel = PostModel.fromJson(result.data);
         print(result.statusMessage.toString());
 
