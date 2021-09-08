@@ -25,8 +25,10 @@ class _ThirdScreenState extends State<ThirdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: defoaltAppbar(title: "The Third Page"),
-      body: Padding(
+      body: Container(
           padding: const EdgeInsets.all(20.0),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -68,24 +70,31 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 height: 20.0,
               ),
               Expanded(
-                child: PageView.builder(
-                    controller: boardconroller,
-                    onPageChanged: (int index) {
-                      setState(() {
-                        currentindex = index.toDouble();
-                      });
-                    },
-                    physics: BouncingScrollPhysics(),
-                    itemCount: widget.datum.medias.length ?? 1,
-                    itemBuilder: (context, index) {
-                      return pageViewItem(widget.datum.medias[index], context);
-                    }),
+                child: widget.datum.medias.length > 0
+                    ? PageView.builder(
+                        controller: boardconroller,
+                        onPageChanged: (int index) {
+                          setState(() {
+                            currentindex = index.toDouble();
+                          });
+                        },
+                        physics: BouncingScrollPhysics(),
+                        itemCount: widget.datum.medias.length ?? 1,
+                        itemBuilder: (context, index) {
+                          return pageViewItem(
+                              widget.datum.medias[index], context);
+                        })
+                    : Center(
+                        child: Text("no media"),
+                      ),
               ),
               SizedBox(
                 height: 20.0,
               ),
               DotsIndicator(
-                dotsCount: widget.datum.medias.length ?? 1,
+                dotsCount: widget.datum.medias.length > 0
+                    ? widget.datum.medias.length
+                    : 1,
                 position: currentindex,
                 decorator: DotsDecorator(
                   size: const Size.square(
