@@ -28,7 +28,7 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
       try {
         image = await servicesFile.pickImage();
 
-        yield UploadImageSUcessState(image);
+        yield UploadImageSUcessState(image.path);
       } catch (e) {
         print(e.toString());
         yield UploadImageErrorState();
@@ -40,7 +40,7 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
       try {
         video = await servicesFile.pickVideo();
 
-        yield UploadVideoSUcessState(video);
+        yield UploadVideoSUcessState(video.path);
       } catch (e) {
         print(e.toString());
         yield UploadVideoErrorState();
@@ -52,7 +52,7 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
       try {
         doc = await servicesFile.pickDoc();
 
-        yield UploadDocSUcessState(doc);
+        yield UploadDocSUcessState(doc.path);
       } catch (e) {
         print(e.toString());
         yield UploadDocErrorState();
@@ -68,6 +68,7 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
             docpath: event.docpath,
             imagepath: event.imagepath,
             videopath: event.videopath);
+        // final result = json.decode(response.toString())['result'];
         // if()
         // postModel = PostModel.fromJson(result.data);
         print(result.statusMessage.toString());

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:task_onaisa/models/getmodel.dart';
 import 'package:task_onaisa/models/itemmodel.dart';
 import 'package:task_onaisa/models/postmodel.dart';
@@ -61,33 +62,45 @@ class DioService {
     FormData formData = new FormData.fromMap({
       'tilte': title,
       'subject': subject,
+      // 'files': [
+      //   await MultipartFile.fromFile(
+      //     imagepath,
+      //     filename: basename(imagepath),
+      //   ),
+      //   MultipartFile.fromFileSync(
+      //     videopath,
+      //     filename: basename(videopath),
+      //   ),
+      //   MultipartFile.fromFileSync(
+      //     docpath,
+      //     filename: basename(docpath),
+      //   ),
+      // ],
       'photo': await MultipartFile.fromFile(
         imagepath,
-        filename: imagepath.split("/").last,
-        // contentType: MediaType('photo', ''),
+        filename: basename(imagepath),
+        contentType: MediaType('photo', basename(imagepath)),
       ),
       'video': await MultipartFile.fromFile(
         videopath,
-        filename: videopath.split("/").last,
-        // contentType: MediaType('video', ''),
+        filename: basename(videopath),
+        contentType: MediaType('video', basename(videopath)),
       ),
       'doc': await MultipartFile.fromFile(
         docpath,
-        filename: docpath.split("/").last,
-        // contentType: MediaType('file', ''),
+        filename: basename(docpath),
+        contentType: MediaType('file', basename(docpath)),
       ),
     });
-    dio.options.headers = {
-      "Accept": "*/*",
-      "Content-Type": "multipart/form-data"
-    };
+    // dio.options.contentType = Headers.formUrlEncodedContentType;
+
     Response response = await dio.post<dynamic>(
       "/store-blog-flutter-task",
       data: formData,
-      // options: Options(headers: <String, String>{
-      //   "Accept": "*/*",
-      //   "Content-Type": "multipart/form-data"
-      // }),
+      options: Options(headers: <String, String>{
+        "Accept": "application/json",
+        "Content-Type": "multipart/form-data",
+      }),
     );
     return response;
   }

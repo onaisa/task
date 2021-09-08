@@ -26,14 +26,14 @@ class FirstScreen extends StatelessWidget {
         child: BlocConsumer<UploadfileBloc, UploadfileState>(
           listener: (context, state) {
             if (state is UploadImageSUcessState) {
-              Imagecontroller.text = state.image.path;
+              Imagecontroller.text = state.imagepath;
               print(Imagecontroller.text);
             }
             if (state is UploadVideoSUcessState) {
-              Videocontroller.text = state.Video.path;
+              Videocontroller.text = state.Videopath;
             }
             if (state is UploadDocSUcessState) {
-              Doccontroller.text = state.Doc.path;
+              Doccontroller.text = state.Docpath;
             }
             if (state is PostDataSuccessState) {
               showToast(text: "post successful", state: ToastStates.SUCCESS);
