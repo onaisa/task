@@ -43,7 +43,7 @@ class Datum {
     this.subject,
     this.createdAt,
     this.updatedAt,
-    this.medias,
+    // this.medias,
   });
 
   int id;
@@ -51,7 +51,7 @@ class Datum {
   String subject;
   DateTime createdAt;
   DateTime updatedAt;
-  List<Media> medias;
+  // List<Media> medias;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -59,7 +59,7 @@ class Datum {
         subject: json["subject"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        medias: List<Media>.from(json["medias"].map((x) => Media.fromJson(x))),
+        // medias: List<Media>.from(json["medias"].map((x) => Media.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,61 +68,61 @@ class Datum {
         "subject": subject,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "medias": List<Media>.from(medias.map((x) => x.toJson())),
+        // "medias": List<Media>.from(medias.map((x) => x.toJson())),
       };
 }
 
-class Media {
-  Media({
-    this.id,
-    this.flutterTaskId,
-    this.media,
-    this.type,
-    this.createdAt,
-    this.updatedAt,
-  });
+// class Media {
+//   Media({
+//     this.id,
+//     this.flutterTaskId,
+//     this.media,
+//     this.type,
+//     this.createdAt,
+//     this.updatedAt,
+//   });
 
-  int id;
-  String flutterTaskId;
-  String media;
-  Type type;
-  DateTime createdAt;
-  DateTime updatedAt;
+//   int id;
+//   String flutterTaskId;
+//   String media;
+//   Type type;
+//   DateTime createdAt;
+//   DateTime updatedAt;
 
-  factory Media.fromJson(Map<String, dynamic> json) => Media(
-        id: json["id"],
-        flutterTaskId: json["flutter_task_id"],
-        media: json["media"],
-        type: typeValues.map[json["type"]],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
+//   factory Media.fromJson(Map<String, dynamic> json) => Media(
+//         id: json["id"],
+//         flutterTaskId: json["flutter_task_id"],
+//         media: json["media"],
+//         type: typeValues.map[json["type"]],
+//         createdAt: DateTime.parse(json["created_at"]),
+//         updatedAt: DateTime.parse(json["updated_at"]),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "flutter_task_id": flutterTaskId,
-        "media": media,
-        "type": typeValues.reverse[type],
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "flutter_task_id": flutterTaskId,
+//         "media": media,
+//         "type": typeValues.reverse[type],
+//         "created_at": createdAt.toIso8601String(),
+//         "updated_at": updatedAt.toIso8601String(),
+//       };
+// }
 
-enum Type { PHOTO, FILE, VIDEO }
+// enum Type { PHOTO, FILE, VIDEO }
 
-final typeValues =
-    EnumValues({"file": Type.FILE, "photo": Type.PHOTO, "video": Type.VIDEO});
+// final typeValues =
+//     EnumValues({"file": Type.FILE, "photo": Type.PHOTO, "video": Type.VIDEO});
 
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+// class EnumValues<T> {
+//   Map<String, T> map;
+//   Map<T, String> reverseMap;
 
-  EnumValues(this.map);
+//   EnumValues(this.map);
 
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
-}
+//   Map<T, String> get reverse {
+//     if (reverseMap == null) {
+//       reverseMap = map.map((k, v) => new MapEntry(v, k));
+//     }
+//     return reverseMap;
+//   }
+// }

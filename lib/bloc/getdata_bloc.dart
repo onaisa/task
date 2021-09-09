@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:task_onaisa/models/getmodel.dart';
+import 'package:task_onaisa/service/diosevice.dart';
 import 'package:task_onaisa/service/services.dart';
 
 part 'getdata_event.dart';

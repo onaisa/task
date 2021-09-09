@@ -129,11 +129,9 @@ class FirstScreen extends StatelessWidget {
                                   onpressed: () {
                                     if (formKey.currentState.validate()) {
                                       filebloc.add(PostDataEvent(
-                                          titlecontroller.text,
-                                          subjectcontroller.text,
-                                          imagecontroller.text,
-                                          videocontroller.text,
-                                          doccontroller.text));
+                                        titlecontroller.text,
+                                        subjectcontroller.text,
+                                      ));
                                       print(titlecontroller.text);
                                       print(subjectcontroller.text);
                                       print(imagecontroller.text);
@@ -160,8 +158,9 @@ class FirstScreen extends StatelessWidget {
                               if (state is PostDataLodingState)
                                 return Center(
                                     child: CircularProgressIndicator());
-                              else
-                                return Text('');
+                              else if (state is PostDataErrorState)
+                                return Center(child: Text(state.error));
+                              return Text('');
                             },
                           )
                         ],

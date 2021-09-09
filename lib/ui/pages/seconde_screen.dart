@@ -54,7 +54,7 @@ class SecondScreen extends StatelessWidget {
 
 Widget listItem({BuildContext cont, Datum datum}) => InkWell(
       onTap: () {
-        navigateTo(cont, ThirdScreen(datum));
+        navigateTo(cont, ThirdScreen(datum.id));
       },
       child: Container(
         padding: const EdgeInsets.all(10.0),

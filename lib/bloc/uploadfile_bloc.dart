@@ -3,8 +3,11 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart';
 import 'package:meta/meta.dart';
-import 'package:task_onaisa/models/postmodel.dart';
+
+import 'package:task_onaisa/service/HttpServices.dart';
+import 'package:task_onaisa/service/diosevice.dart';
 import 'package:task_onaisa/service/services.dart';
 
 part 'uploadfile_event.dart';
@@ -14,7 +17,7 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
   UploadfileBloc() : super(UploadfileInitial());
   FileService servicesFile = FileService();
   DioService dioService = DioService();
-  PostModel postModel;
+
   File image;
   File video;
   File doc;
@@ -62,20 +65,19 @@ class UploadfileBloc extends Bloc<UploadfileEvent, UploadfileState> {
     if (event is PostDataEvent) {
       yield (PostDataLodingState());
       try {
-        Response result = await DioService.postData(
+        StreamedResponse result = await Httphilper.postData(
             title: event.title,
             subject: event.subject,
-            docpath: event.docpath,
-            imagepath: event.imagepath,
-            videopath: event.videopath);
-        // final result = json.decode(response.toString())['result'];
-        // postModel = PostModel.fromJson(result.data);
-        print(result.statusMessage.toString());
+            docpath: doc.path,
+            imagepath: image.path,
+            videopath: video.path);
 
-        yield (PostDataSuccessState(postModel));
+        print(result.statusCode);
+
+        yield (PostDataSuccessState());
       } catch (e) {
         print(e.toString());
-        yield (PostDataErrorState(e.toString()));
+        yield (PostDataErrorState("no connect"));
       }
     }
   }
