@@ -75,14 +75,16 @@ Widget listItem({BuildContext cont, Datum datum}) => InkWell(
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
-                    "subject : ${datum.subject}",
+                    "subject : ${datum.subject}".length >= 25
+                        ? "subject :${datum.subject}".substring(0, 24)
+                        : "subject :${datum.subject}",
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
-                    "created at: ${datum.createdAt}",
+                    "created at: ${datum.createdAt}".substring(0, 28),
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),

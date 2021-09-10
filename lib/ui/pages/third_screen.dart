@@ -36,45 +36,97 @@ class ThirdScreen extends StatelessWidget {
                 );
               } else if (state is GetmediaSuccessState) {
                 return Container(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(15.0),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          ' Title: ${state.itemModel.data.title}',
-                          style: const TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
+                        RichText(
+                          text: TextSpan(
+                              text: "Title: ",
+                              style: const TextStyle(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                              children: [
+                                TextSpan(
+                                  text: "${state.itemModel.data.title}",
+                                  style: const TextStyle(
+                                    fontSize: 22.0,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ]),
+                        ),
+                        Divider(
+                          height: 5.0,
+                          thickness: 2.0,
+                          color: Colors.black,
                         ),
                         const SizedBox(
-                          height: 10.0,
+                          height: 5.0,
                         ),
-                        Text(
-                          'Subject: ${state.itemModel.data.subject}',
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
+                        RichText(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                              text: "Subject: ",
+                              style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                              children: [
+                                TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.black54,
+                                    ),
+                                    text: "${state.itemModel.data.subject}"
+                                                .length >=
+                                            25
+                                        ? "${state.itemModel.data.subject}"
+                                            .substring(0, 24)
+                                        : "${state.itemModel.data.subject}"),
+                              ]),
                         ),
                         const SizedBox(
-                          height: 10.0,
+                          height: 5.0,
                         ),
-                        Text(
-                          'Created_at: ${state.itemModel.data.createdAt}',
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                          ),
+                        RichText(
+                          text: TextSpan(
+                              text: "created_at: ",
+                              style: const TextStyle(
+                                  fontSize: 18.0, color: Colors.black),
+                              children: [
+                                TextSpan(
+                                  text: "${state.itemModel.data.createdAt}"
+                                      .substring(0, 16),
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black54,
+                                  ),
+                                )
+                              ]),
                         ),
                         const SizedBox(
-                          height: 10.0,
+                          height: 5.0,
                         ),
-                        Text(
-                          'Updated_at: ${state.itemModel.data.updatedAt}',
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                          ),
+                        RichText(
+                          text: TextSpan(
+                              text: "Updated_at: ",
+                              style: const TextStyle(
+                                  fontSize: 18.0, color: Colors.black),
+                              children: [
+                                TextSpan(
+                                  text: "${state.itemModel.data.updatedAt}"
+                                      .substring(0, 16),
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black54,
+                                  ),
+                                )
+                              ]),
                         ),
                         const SizedBox(
                           height: 20.0,
